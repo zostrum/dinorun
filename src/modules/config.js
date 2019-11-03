@@ -1,5 +1,5 @@
 export const config = {
-    key: "123456789"
+    key: "1234567890"
 }
 
 console.log("Key - ", config.key)

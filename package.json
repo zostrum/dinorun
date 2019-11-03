@@ -1,0 +1,23 @@
+{
+  "name": "dino2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "watch": {
+    "test": "{src,test}/*.js"
+  },
+  "scripts": {
+    "dev": "watch 'npm run build' src",
+    "build": "webpack --mode development"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "^3.20.1"
+  },
+  "devDependencies": {
+    "watch": "^1.0.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

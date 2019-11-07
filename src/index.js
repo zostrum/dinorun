@@ -1,60 +1,67 @@
-import AppService from "./modules/app.service"
-// import {config} from "./modules/config"
-import "./modules/header.component"
 import "../node_modules/phaser/dist/phaser.js"
+// import {config} from "./modules/config"
+// import AppService from "./modules/app.service"
+import {world} from "./modules/world"
 
-var service = new AppService('lol-kek');
-service.log();
+// var service = new AppService('lol-kek');
+// service.log();
 
 window.onload = function() {
-    var config = {
+
+    let config = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 1400,
+        height: 300,
+        backgroundColor: 'fff',
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 300 },
-                debug: false
+                gravity: {y: 100},
+                debug: true
             }
         },
         scene: {
             preload: preload,
             create: create,
             update: update
+        },
+        custom: {
+            worldVelocity: -100,
+            platformSprite: {
+                w: 1188
+            }
         }
     };
 
-    var platforms;
-
-    var game = new Phaser.Game(config);
+    let game = new Phaser.Game(config);
+    let platforms;
 
     function preload ()
     {
-        this.load.image('sky', '../assets/sky.png');
         this.load.image('ground', '../assets/platform.png');
         this.load.image('star', '../assets/star.png');
-        this.load.image('bomb', '../assets/bomb.png');
-        this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+        this.config = config;
+        // this.load.image('sky', '../assets/sky.png');
+        // this.load.image('bomb', '../assets/bomb.png');
+        // this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     }
 
-    var platforms;
 
     function create ()
     {
-        this.add.image(400, 300, 'sky');
-
-        platforms = this.physics.add.staticGroup();
-
-        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-
-        platforms.create(600, 400, 'ground');
-        platforms.create(50, 250, 'ground');
-        platforms.create(750, 220, 'ground');
+        platforms = world.addPlatforms.call(this);
     }
 
     function update ()
     {
+        platforms.children.iterate(function (platform) {
+            let platformRightPosition = platform.getBounds().right;
 
+            if (platformRightPosition <= 0) {
+                platform.setX(platform.width + platformRightPosition);
+            }
+        });
     }
 }
+

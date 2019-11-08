@@ -1,5 +1,6 @@
 import "../node_modules/phaser/dist/phaser.js"
 import World from "./modules/world"
+import Dino from "./modules/dino"
 // import {config} from "./modules/config"
 // import AppService from "./modules/app.service"
 // import {world} from "./modules/world"
@@ -18,7 +19,7 @@ window.onload = function() {
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: {y: 100},
+                gravity: {y: 500},
                 debug: true
             }
         },
@@ -36,9 +37,8 @@ window.onload = function() {
     };
 
     let game = new Phaser.Game(config);
-    let platforms;
-    var dino;
-    let world;
+    let gameObjects = {};
+    let world, dino;
 
     function preload ()
     {
@@ -48,6 +48,7 @@ window.onload = function() {
 
         this.config = config;
         world = new World(this);
+        dino = new Dino(this);
         // this.load.image('sky', '../assets/sky.png');
         // this.load.image('bomb', '../assets/bomb.png');
     }
@@ -55,16 +56,21 @@ window.onload = function() {
 
     function create ()
     {
-        platforms = world.addPlatforms();
-        dino = world.addDino();
+        gameObjects.platforms = world.addPlatforms();
+        gameObjects.dino = dino.addDino();
 
-        this.physics.add.collider(dino, platforms);
+        this.physics.add.collider(gameObjects.dino, gameObjects.platforms);
+
+        gameObjects.cursors = this.input.keyboard.createCursorKeys();
     }
 
     function update ()
     {
-        dino.anims.play('run', true);
-        world.rotatePlatforms(platforms);
+        gameObjects.dino.anims.play('run', true);
+        world.rotatePlatforms(gameObjects.platforms);
+
+        dino.processJump(gameObjects.cursors, gameObjects.dino);
+
     }
 }
 

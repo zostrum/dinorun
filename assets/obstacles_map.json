@@ -1,0 +1,21 @@
+{"frames": [
+    {
+        "filename": "cactus_small_1",
+        "type": "OG",
+        "frame": {"x":94,"y":2,"w":16,"h":33},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":16,"h":33},
+        "sourceSize": {"w":16,"h":33},
+        "pivot": {"x":0.5,"y":1}
+    },
+    {
+        "filename": "cactus_small_2",
+        "frame": {"x":111,"y":2,"w":16,"h":33},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":16,"h":33},
+        "sourceSize": {"w":16,"h":33},
+        "pivot": {"x":0.5,"y":1}
+    }
+]}

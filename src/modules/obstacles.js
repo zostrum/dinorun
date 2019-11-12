@@ -1,4 +1,5 @@
 export default class Obstacles {
+
     constructor(scene) {
         this._scene = scene;
         this._obstacles = {
@@ -8,12 +9,20 @@ export default class Obstacles {
                 velocityX: this._scene.config.custom.worldVelocity
             })
         }
+    }
 
+    initObstaclesConfig() {
+        if (!this.obstaclesMeta) {
+            this.obstaclesMeta = this._scene.cache.json.get('obstacles').meta;
+        }
+
+        return this;
     }
 
     spawnGroundObstacle() {
         if (this._obstacles.groundObstacles.countActive() < 1) {
-            var cactus = this._scene.physics.add.sprite(this._scene.config.width - 100, 50, 'obstacles', 'cactus_small_1');
+            var cactus = this._scene.physics.add.sprite(this._scene.config.width - 100, 50,
+                'obstacles', 'cactus_small_1_2_3');
 
             this._obstacles.groundObstacles.add(cactus);
         }

@@ -1,6 +1,9 @@
 export default class World {
     constructor(scene) {
         this._scene = scene;
+        this.score = 0;
+        let context = new AudioContext();
+        context.resume();
     }
 
     addPlatforms (count = 2) {
@@ -28,6 +31,34 @@ export default class World {
                 platform.setX(platform.width + platformRightPosition);
             }
         });
+    }
+
+    runTimer() {
+
+        this.score = this._scene.add.text(16, 16, this._scene.config.custom.gameData.scoreText
+            + this._scene.config.custom.gameData.userScore,
+            { fontSize: '32px', fill: '#000' });
+
+        let self = this;
+        this._scene.time.addEvent({
+            delay: 250,
+            callback: function() {
+                self.updateScore();
+            },
+            loop: true
+        });
+    }
+
+    updateScore() {
+        this._scene.config.custom.gameData.userScore++;
+        this.score.setText(this._scene.config.custom.gameData.scoreText
+            + this._scene.config.custom.gameData.userScore);
+        if (this._scene.config.custom.gameData.userScore % 50 == 0) {
+            this._scene.sound.play("tick");
+            // Emit event here
+        }
+
+        return this;
     }
 }
 

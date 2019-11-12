@@ -30,6 +30,16 @@ window.onload = function() {
             update: update
         },
         custom: {
+            gameData: {
+                scoreText: "Score: ",
+                userScore: 0
+            },
+            obstacles:{
+                map: '../assets/obstacles_map.json',
+            },
+            sounds: {
+                tick: "../assets/click.mp3"
+            },
             worldVelocity: -150,
             platformSprite: {
                 w: 1188
@@ -46,31 +56,27 @@ window.onload = function() {
         this.load.image('ground', '../assets/platform.png');
         this.load.image('star', '../assets/star.png');
         this.load.spritesheet('dino', '../assets/dino_sprite.png', { frameWidth: 44, frameHeight: 46 });
-        this.load.atlas('obstacles', 'assets/obstacles.png', 'assets/obstacles_map.json');
+        this.load.atlas('obstacles', '../assets/obstacles.png', config.custom.obstacles.map);
+        this.load.audio('tick', config.custom.sounds.tick);
 
         this.config = config;
         world = new World(this);
         dino = new Dino(this);
         obstacles = new Obstacles(this);
-        // this.load.image('sky', '../assets/sky.png');
-        // this.load.image('bomb', '../assets/bomb.png');
     }
 
 
     function create ()
     {
+        obstacles.initObstaclesConfig();
+        world.runTimer();
+
         gameObjects.platforms = world.addPlatforms();
         gameObjects.dino = dino.addDino();
-
-        this.physics.add.collider(gameObjects.dino, gameObjects.platforms);
-
         gameObjects.cursors = this.input.keyboard.createCursorKeys();
 
+        this.physics.add.collider(gameObjects.dino, gameObjects.platforms);
         obstacles.addCollider(gameObjects.platforms);
-        // var catctus = this.physics.add.sprite(350, 50, 'obstacles', 'cactus_small_1');
-        // catctus.setVelocityX(config.custom.worldVelocity);
-        // this.physics.add.collider(catctus, gameObjects.platforms);
-
     }
 
     function update ()

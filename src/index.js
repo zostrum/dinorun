@@ -32,7 +32,10 @@ window.onload = function() {
         custom: {
             gameData: {
                 scoreText: "Score: ",
-                userScore: 0
+                userScore: 0,
+                stage: 0,
+                changeStageEvery: 15,
+                speedChange: -50
             },
             obstacles:{
                 map: '../assets/obstacles_map.json',
@@ -82,7 +85,7 @@ window.onload = function() {
     function update ()
     {
         gameObjects.dino.anims.play('run', true);
-        world.rotatePlatforms(gameObjects.platforms);
+        world.rotatePlatforms();
         obstacles.spawnGroundObstacle().removeOutbound();
 
         dino.processJump(gameObjects.cursors, gameObjects.dino);

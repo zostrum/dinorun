@@ -155,7 +155,7 @@
     ],
     "meta": {
         "availableOnStage": {
-            "1": [
+            "0": [
                 "cactus_small_1",
                 "cactus_small_2",
                 "cactus_small_3",
@@ -163,7 +163,7 @@
                 "cactus_small_5",
                 "cactus_small_6"
             ],
-            "3": [
+            "2": [
                 "cactus_small_1_2",
                 "cactus_small_2_3",
                 "cactus_small_3_4",

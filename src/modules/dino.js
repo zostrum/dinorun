@@ -1,16 +1,22 @@
 export default class dino {
     constructor(scene) {
         this._scene = scene;
+
+        this.registerListeners()
+    }
+
+    registerListeners() {
+        this._scene.events.addListener('nextStage', this.increaseAnimationSpeed, this);
     }
 
     addDino() {
-        let dino = this._scene.physics.add.sprite(100, 100, 'dino');
-        dino.setBounce(0);
-        dino.setCollideWorldBounds(true);
+        this.dino = this._scene.physics.add.sprite(100, 100, 'dino');
+        this.dino.setBounce(0);
+        this.dino.setCollideWorldBounds(true);
 
         this.addDinoAnimation();
 
-        return dino;
+        return this.dino;
     }
 
     addDinoAnimation() {
@@ -22,12 +28,15 @@ export default class dino {
         });
     }
 
-    processJump(cursors, dino) {
-        if (cursors.up.isDown && dino.body.touching.down)
+    processJump(cursors) {
+        if (cursors.up.isDown && this.dino.body.touching.down)
         {
-            dino.setVelocityY(-300);
+            this.dino.setVelocityY(-300);
         }
     }
 
+    increaseAnimationSpeed() {
+        this.dino.anims.msPerFrame/= 1.05;
+    }
 }
 
